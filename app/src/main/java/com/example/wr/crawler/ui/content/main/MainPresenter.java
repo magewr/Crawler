@@ -1,8 +1,10 @@
 package com.example.wr.crawler.ui.content.main;
 
-import com.example.wr.crawler.data.remote.dto.SampleDTO;
+import com.example.wr.crawler.data.DataRepository;
+import com.example.wr.crawler.data.remote.dto.ImageDTO;
 import com.example.wr.crawler.interactor.GetSampleDTOUseCase;
 import com.example.wr.crawler.ui.base.Presenter;
+import com.example.wr.crawler.ui.listener.SimpleCompletableObserver;
 
 import javax.inject.Inject;
 
@@ -14,44 +16,17 @@ import io.reactivex.observers.DisposableObserver;
 
 public class MainPresenter extends Presenter<MainContract.View> implements MainContract.Presenter {
 
-    GetSampleDTOUseCase useCase;
+    DataRepository dataRepository;
 
     @Inject
-    public MainPresenter(GetSampleDTOUseCase useCase){
-        this.useCase = useCase;
-    }
-
-    @Override
-    public void getSampleData() {
-        useCase.execute(new SampleDataObserver(), null);
+    public MainPresenter(DataRepository dataRepository){
+        this.dataRepository = dataRepository;
     }
 
     @Override
     public void onCreatePresenter() {
         super.onCreatePresenter();
-        getSampleData();
-    }
-
-    @Override
-    public void dispose() {
-        useCase.dispose();
-    }
-
-    private final class SampleDataObserver extends DisposableObserver<SampleDTO> {
-        @Override
-        public void onNext(SampleDTO sampleDTO) {
-            getView().showSampleData(sampleDTO);
-        }
-
-        @Override
-        public void onError(Throwable e) {
-
-        }
-
-        @Override
-        public void onComplete() {
-
-        }
+        getView().showSampleData(dataRepository.getImageDtoList().size());
     }
 
 }

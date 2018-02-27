@@ -1,6 +1,6 @@
 package com.example.wr.crawler.ui.content.main;
 
-import com.example.wr.crawler.data.remote.dto.SampleDTO;
+import com.example.wr.crawler.data.remote.dto.ImageDTO;
 import com.example.wr.crawler.ui.base.BaseView;
 
 /**
@@ -10,11 +10,9 @@ import com.example.wr.crawler.ui.base.BaseView;
 public interface MainContract{
 
     interface View extends BaseView {
-        void showSampleData(SampleDTO sampleDTO);
+        void showSampleData(int size);
     }
 
     interface Presenter {
-        void getSampleData();
-        void dispose();
     }
 }

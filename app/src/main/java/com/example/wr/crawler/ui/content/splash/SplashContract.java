@@ -13,6 +13,6 @@ public interface SplashContract{
     }
 
     interface Presenter {
-
+        void getImageList();
     }
 }

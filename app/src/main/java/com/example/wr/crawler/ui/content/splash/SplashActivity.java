@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Handler;
 import android.widget.ImageView;
 
-import com.bumptech.glide.Glide;
 import com.example.wr.crawler.R;
 import com.example.wr.crawler.di.module.ActivityModule;
 import com.example.wr.crawler.ui.base.BaseActivity;
@@ -40,15 +39,12 @@ public class SplashActivity extends BaseActivity implements SplashContract.View{
 
     @Override
     public void moveToMainActivity() {
-        new Handler().postDelayed(() -> {
-            Intent intent = new Intent(SplashActivity.this, MainActivity.class);
-            startActivity(intent);
-            finish();
-        }, 5000);
+        Intent intent = new Intent(SplashActivity.this, MainActivity.class);
+        startActivity(intent);
+        finish();
     }
 
     @Override
     public void loadSplashImage() {
-        Glide.with(this).load(R.raw.mark_and_john).into(splashImageVIew);
     }
 }

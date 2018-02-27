@@ -5,5 +5,5 @@ package com.example.wr.crawler.data.remote.service;
  */
 
 public class BaseUrl {
-    public static final String BASE_URL = "https://api.coinone.co.kr/";
+    public static final String BASE_URL = "http://www.gettyimagesgallery.com/collections/archive/slim-aarons.aspx";
 }

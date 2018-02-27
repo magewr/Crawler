@@ -1,15 +1,12 @@
 package com.example.wr.crawler.ui.content.main;
 
+import android.widget.TextView;
+
 import com.example.wr.crawler.R;
-import com.example.wr.crawler.data.remote.dto.SampleDTO;
+import com.example.wr.crawler.data.remote.dto.ImageDTO;
 import com.example.wr.crawler.di.component.ActivityComponent;
 import com.example.wr.crawler.di.module.ActivityModule;
 import com.example.wr.crawler.ui.base.BaseActivity;
-import com.robinhood.ticker.TickerUtils;
-import com.robinhood.ticker.TickerView;
-
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 import javax.inject.Inject;
 
@@ -23,13 +20,10 @@ public class MainActivity extends BaseActivity implements MainContract.View {
 
     @Inject
     MainPresenter presenter;
-    private ActivityComponent activityComponent;
+    ActivityComponent activityComponent;
 
-    @BindView(R.id.tickerView)
-    TickerView tickerView;
-
-    @BindView(R.id.currentTimeText)
-    TickerView timeTextView;
+    @BindView(R.id.textView3)
+    TextView textView;
 
     @Override
     protected int getLayoutId() {
@@ -46,24 +40,16 @@ public class MainActivity extends BaseActivity implements MainContract.View {
     protected void initPresenter() {
         super.presenter = presenter;
         presenter.setView(this);
-        tickerView.setCharacterList(TickerUtils.getDefaultNumberList());
-        timeTextView.setCharacterList(TickerUtils.getDefaultNumberList());
-        tickerView.setText("0");
     }
 
     @Override
-    public void showSampleData(SampleDTO sampleDTO) {
-        int price = Integer.parseInt(sampleDTO.getLast());
-        tickerView.setText(String.format("￦ %,10d", price), true);
-        SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss");
-        String date = formatter.format(new Date());
-        timeTextView.setText(date);
+    public void showSampleData(int size) {
+        textView.setText("로딩완료 / count :" + size);
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        presenter.dispose();
     }
 
 }

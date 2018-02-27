@@ -6,7 +6,7 @@ android {
     buildToolsVersion "26.0.2"
     defaultConfig {
         applicationId "com.example.wr.clidentframework"
-        minSdkVersion 22
+        minSdkVersion 16
         targetSdkVersion 27
         versionCode 1
         versionName "1.0"
@@ -49,14 +49,8 @@ dependencies {
     testCompile 'junit:junit:4.12'
     compile 'javax.inject:javax.inject:1'
 
-    //retrofit + okhttp
-    compile 'com.squareup.retrofit2:retrofit:2.3.0'
-    compile 'com.squareup.retrofit2:converter-gson:2.3.0'
-    compile 'com.squareup.okhttp3:okhttp:3.8.0'
-    compile 'com.squareup.okhttp3:logging-interceptor:3.6.0'
-
     //Android RX
-    compile 'io.reactivex.rxjava2:rxjava:2.0.7'
+    compile 'io.reactivex.rxjava2:rxjava:2.1.7'
     compile 'io.reactivex.rxjava2:rxandroid:2.0.1'
     compile 'com.squareup.retrofit2:adapter-rxjava2:2.2.0'
 
@@ -73,15 +67,8 @@ dependencies {
     compile 'com.google.dagger:dagger:2.13'
     annotationProcessor 'com.google.dagger:dagger-compiler:2.11'
 
-    //glide
-    compile 'com.github.bumptech.glide:glide:4.3.1'
-    annotationProcessor 'com.github.bumptech.glide:compiler:4.3.1'
+    //jsoup
+    compile 'org.jsoup:jsoup:1.7.3'
 
-
-    //////////////////////////////////////
-    //View Open Source
-
-    //Ticker
-    compile 'com.robinhood.ticker:ticker:1.2.1'
     implementation 'com.android.support:cardview-v7:27.0.2'
 }

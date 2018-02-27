@@ -1,6 +1,6 @@
 package com.example.wr.crawler.data.remote.service;
 
-import com.example.wr.crawler.data.remote.dto.SampleDTO;
+import com.example.wr.crawler.data.remote.dto.ImageDTO;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
@@ -12,5 +12,5 @@ import retrofit2.http.GET;
 public interface SampleApiService {
 
     @GET("ticker/")
-    Call<SampleDTO> getSampleDetailData();
+    Call<ImageDTO> getSampleDetailData();
 }
