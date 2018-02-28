@@ -14,6 +14,7 @@ import io.reactivex.Completable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import lombok.Getter;
+import okhttp3.internal.cache.DiskLruCache;
 
 /**
  * Created by WR on 2017-11-29.

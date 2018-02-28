@@ -10,7 +10,7 @@ import com.example.wr.crawler.ui.base.BaseView;
 public interface MainContract{
 
     interface View extends BaseView {
-        void showSampleData(int size);
+        void initView();
     }
 
     interface Presenter {

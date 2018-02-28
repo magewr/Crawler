@@ -19,14 +19,14 @@ public class MainPresenter extends Presenter<MainContract.View> implements MainC
     DataRepository dataRepository;
 
     @Inject
-    public MainPresenter(DataRepository dataRepository){
+    MainPresenter(DataRepository dataRepository){
         this.dataRepository = dataRepository;
     }
 
     @Override
     public void onCreatePresenter() {
         super.onCreatePresenter();
-        getView().showSampleData(dataRepository.getImageDtoList().size());
+        getView().initView();
     }
 
 }

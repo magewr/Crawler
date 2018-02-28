@@ -18,9 +18,6 @@ public class SplashActivity extends BaseActivity implements SplashContract.View{
     @Inject
     SplashPresenter splashPresenter;
 
-    @BindView(R.id.imgView)
-    ImageView splashImageVIew;
-
     @Override
     protected int getLayoutId() {
         return R.layout.activity_splash;

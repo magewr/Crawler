@@ -1,12 +1,14 @@
 package com.example.wr.crawler.ui.content.main;
 
+import android.support.design.widget.TabLayout;
+import android.support.v4.view.ViewPager;
 import android.widget.TextView;
 
 import com.example.wr.crawler.R;
-import com.example.wr.crawler.data.remote.dto.ImageDTO;
 import com.example.wr.crawler.di.component.ActivityComponent;
 import com.example.wr.crawler.di.module.ActivityModule;
 import com.example.wr.crawler.ui.base.BaseActivity;
+import com.example.wr.crawler.ui.content.main.adapter.MainViewPagerAdapter;
 
 import javax.inject.Inject;
 
@@ -22,8 +24,8 @@ public class MainActivity extends BaseActivity implements MainContract.View {
     MainPresenter presenter;
     ActivityComponent activityComponent;
 
-    @BindView(R.id.textView3)
-    TextView textView;
+    @BindView(R.id.view_pager)  ViewPager viewPager;
+    @BindView(R.id.tab_layout)  TabLayout tabLayout;
 
     @Override
     protected int getLayoutId() {
@@ -43,8 +45,13 @@ public class MainActivity extends BaseActivity implements MainContract.View {
     }
 
     @Override
-    public void showSampleData(int size) {
-        textView.setText("로딩완료 / count :" + size);
+    public void initView() {
+        MainViewPagerAdapter adapter = new MainViewPagerAdapter(getSupportFragmentManager());
+        viewPager.setAdapter(adapter);
+        tabLayout.setupWithViewPager(viewPager);
+        int[] iconRes = {R.drawable.list, R.drawable.grid, R.drawable.viewpager};
+        for (int i = 0 ; i < iconRes.length ; i ++)
+            tabLayout.getTabAt(i).setIcon(iconRes[i]);
     }
 
     @Override
