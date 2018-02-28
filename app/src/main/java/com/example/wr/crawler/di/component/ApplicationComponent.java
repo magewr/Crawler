@@ -4,6 +4,7 @@ import com.example.wr.crawler.di.module.ActivityModule;
 import com.example.wr.crawler.di.module.ApiModule;
 import com.example.wr.crawler.di.module.ApplicationModule;
 import com.example.wr.crawler.di.module.FragmentModule;
+import com.example.wr.crawler.di.module.PagerItemFragmentModule;
 import com.example.wr.crawler.ui.base.BaseActivity;
 
 import javax.inject.Singleton;
@@ -21,4 +22,5 @@ public interface ApplicationComponent {
 
     ActivityComponent activityComponent(ActivityModule activityModule);
     FragmentComponent fragmentComponent(FragmentModule fragmentModule);
+    PagerItemFragmentComponent pagerItemFragmentComponent(PagerItemFragmentModule fragmentModule);
 }
