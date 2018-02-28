@@ -19,6 +19,7 @@ public class PagerFragment extends BaseFragment implements PagerContract.View {
 
     @Inject
     PagerPresenter presenter;
+    private PagerAdapter adapter;
 
     @BindView(R.id.pager_viewpager)
     ViewPager viewPager;
@@ -41,8 +42,9 @@ public class PagerFragment extends BaseFragment implements PagerContract.View {
 
     @Override
     public void initView() {
-        PagerAdapter adapter = new PagerAdapter(getChildFragmentManager());
+        adapter = new PagerAdapter(getChildFragmentManager());
         viewPager.setAdapter(adapter);
         presenter.setPagerAdapterModel(adapter);
     }
+
 }

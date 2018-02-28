@@ -30,4 +30,10 @@ public class PagerPresenter extends Presenter<PagerContract.View> implements Pag
         this.pagerAdapterModel = pagerAdapterModel;
         this.pagerAdapterModel.setImageDTOList(dataRepository.getImageDtoList());
     }
+
+    @Override
+    public void onResumeFragment() {
+        if(pagerAdapterModel != null)
+            pagerAdapterModel.refreshDataSet();
+    }
 }

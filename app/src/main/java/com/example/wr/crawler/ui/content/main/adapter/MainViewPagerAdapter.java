@@ -42,4 +42,6 @@ public class MainViewPagerAdapter extends FragmentStatePagerAdapter {
     public CharSequence getPageTitle(int position) {
         return null;
     }
+
+
 }

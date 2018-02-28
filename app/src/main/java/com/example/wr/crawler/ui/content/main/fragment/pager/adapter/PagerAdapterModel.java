@@ -10,4 +10,5 @@ import java.util.ArrayList;
 
 public interface PagerAdapterModel {
     void setImageDTOList(ArrayList<ImageDTO> list);
+    void refreshDataSet();
 }

@@ -1,5 +1,8 @@
 package com.example.wr.crawler.data.remote;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+
 import com.example.wr.crawler.data.remote.dto.ImageDTO;
 import com.example.wr.crawler.data.remote.service.BaseUrl;
 
@@ -8,6 +11,10 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import java.io.InputStream;
+import java.io.InterruptedIOException;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 
 import javax.inject.Inject;
@@ -45,6 +52,27 @@ public class RemoteRepository {
             }
         });
         return getImageListSingle;
+    }
+
+    public Single<Bitmap> downloadImageFromURL(String src) {
+        Single<Bitmap> single = Single.create(emitter -> {
+            try {
+                URL url = new URL(src);
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                connection.setDoInput(true);
+                connection.connect();
+                InputStream input = connection.getInputStream();
+                Bitmap myBitmap = BitmapFactory.decodeStream(input);
+                emitter.onSuccess(myBitmap);
+            } catch (Exception e) {
+                // Log exception
+                if (emitter.isDisposed() == false)
+                    emitter.onError(e);
+                return;
+            }
+        });
+
+        return single;
     }
 
 }

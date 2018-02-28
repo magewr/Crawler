@@ -26,6 +26,7 @@ public class App extends Application {
                 .apiModule(new ApiModule())
                 .applicationModule(new ApplicationModule(this))
                 .build();
+        context = this;
     }
 
     @Override

@@ -1,10 +1,9 @@
 package com.example.wr.crawler.di.module;
 
-import com.example.wr.crawler.di.scope.PerFragment;
 import com.example.wr.crawler.ui.base.BaseFragment;
+import com.example.wr.crawler.ui.content.main.fragment.grid.recyclerview.GridRecyclerViewAdapter;
 
 import dagger.Module;
-import dagger.Provides;
 
 /**
  * Created by loadm on 2018-02-28.

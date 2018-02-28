@@ -23,6 +23,9 @@ public class ListViewFragment extends BaseFragment implements ListViewContract.V
     @Inject
     protected ListViewPresenter presenter;
 
+    @Inject
+    protected ListRecyclerVIewAdapter adapter;
+
     @Nullable @BindView(R.id.list_recyclerview)
     protected RecyclerView recyclerView;
 
@@ -44,7 +47,6 @@ public class ListViewFragment extends BaseFragment implements ListViewContract.V
 
     @Override
     public void initView() {
-        ListRecyclerVIewAdapter adapter = new ListRecyclerVIewAdapter();
         recyclerView.setAdapter(adapter);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);

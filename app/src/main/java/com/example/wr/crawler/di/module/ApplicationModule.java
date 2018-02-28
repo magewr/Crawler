@@ -3,6 +3,7 @@ package com.example.wr.crawler.di.module;
 import android.content.Context;
 
 import com.example.wr.crawler.App;
+import com.example.wr.crawler.ui.utils.ImageLoadHelper;
 
 import javax.inject.Singleton;
 

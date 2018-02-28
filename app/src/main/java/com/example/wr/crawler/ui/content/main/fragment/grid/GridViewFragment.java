@@ -24,14 +24,22 @@ public class GridViewFragment extends ListViewFragment {
     @BindView(R.id.grid_recyclerview)
     protected RecyclerView recyclerView;
 
+    @Inject
+    protected GridRecyclerViewAdapter adapter;
+
     @Override
     protected int getLayoutId() {
         return R.layout.fragment_grid;
     }
 
     @Override
+    protected void initDagger() {
+        getApplicationComponent().fragmentComponent(new FragmentModule(this)).inject(this);
+    }
+
+    @Override
     public void initView() {
-        GridRecyclerViewAdapter adapter = new GridRecyclerViewAdapter();
+        super.adapter = adapter;
         recyclerView.setAdapter(adapter);
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getContext(), 3);
         recyclerView.setLayoutManager(layoutManager);

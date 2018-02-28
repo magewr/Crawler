@@ -9,6 +9,10 @@ import com.example.wr.crawler.R;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.disposables.Disposable;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * Created by loadm on 2018-02-28.
@@ -21,6 +25,9 @@ public class ListRecyclerViewHolder extends RecyclerView.ViewHolder {
 
     @BindView(R.id.item_text)
     TextView textView;
+
+    @Getter @Setter
+    private Disposable disposable;
 
     public ListRecyclerViewHolder(View itemView) {
         super(itemView);

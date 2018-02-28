@@ -26,8 +26,10 @@ public class PagerItemFragment extends Fragment {
 
     static PagerItemFragment newInstance(String imageName, String caption) {
         PagerItemFragment fragment = new PagerItemFragment();
-        fragment.imageName = imageName;
-        fragment.caption = caption;
+        Bundle bundle = new Bundle();
+        bundle.putString("imageName", imageName);
+        bundle.putString("caption", caption);
+        fragment.setArguments(bundle);
         return fragment;
     }
 
@@ -43,8 +45,15 @@ public class PagerItemFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_pager_item, container, false);
         ButterKnife.bind(this, view);
-
-        textView.setText(caption);
+        Bundle bundle = getArguments();
+        imageName = bundle.getString("imageName");
+        caption = bundle.getString("caption");
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        textView.setText(caption);
     }
 }

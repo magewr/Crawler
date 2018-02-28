@@ -14,5 +14,6 @@ public interface PagerContract {
 
     interface Presenter {
         void setPagerAdapterModel(PagerAdapterModel pagerAdapterModel);
+        void onResumeFragment();
     }
 }

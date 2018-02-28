@@ -38,4 +38,10 @@ public class PagerAdapter extends FragmentStatePagerAdapter implements PagerAdap
         imageList = list;
         notifyDataSetChanged();
     }
+
+    @Override
+    public void refreshDataSet() {
+        notifyDataSetChanged();
+    }
+
 }

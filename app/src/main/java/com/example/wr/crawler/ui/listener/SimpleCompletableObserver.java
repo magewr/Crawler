@@ -6,16 +6,13 @@ import com.example.wr.crawler.App;
 
 import io.reactivex.CompletableObserver;
 import io.reactivex.disposables.Disposable;
+import io.reactivex.observers.DisposableCompletableObserver;
 
 /**
  * Created by loadm on 2018-02-27.
  */
 
-public class SimpleCompletableObserver implements CompletableObserver {
-    @Override
-    public void onSubscribe(Disposable d) {
-
-    }
+public class SimpleCompletableObserver extends DisposableCompletableObserver {
 
     @Override
     public void onComplete() {
