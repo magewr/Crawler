@@ -11,6 +11,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InterruptedIOException;
 import java.net.HttpURLConnection;
@@ -54,25 +55,20 @@ public class RemoteRepository {
         return getImageListSingle;
     }
 
-    public Single<Bitmap> downloadImageFromURL(String src) {
-        Single<Bitmap> single = Single.create(emitter -> {
-            try {
-                URL url = new URL(src);
-                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-                connection.setDoInput(true);
-                connection.connect();
-                InputStream input = connection.getInputStream();
-                Bitmap myBitmap = BitmapFactory.decodeStream(input);
-                emitter.onSuccess(myBitmap);
-            } catch (Exception e) {
-                // Log exception
-                if (emitter.isDisposed() == false)
-                    emitter.onError(e);
-                return;
-            }
-        });
-
-        return single;
+    public Bitmap downloadImageFromURL(String src) throws IOException {
+        Bitmap bitmap = null;
+        InputStream iStream = null;
+        URL url = new URL(src);
+        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+        conn.setReadTimeout(5000 /* milliseconds */);
+        conn.setConnectTimeout(7000 /* milliseconds */);
+        conn.setRequestMethod("GET");
+        conn.setDoInput(true);
+        conn.connect();
+        iStream = conn.getInputStream();
+        bitmap = BitmapFactory.decodeStream(iStream);
+        iStream.close();
+        return bitmap;
     }
 
 }

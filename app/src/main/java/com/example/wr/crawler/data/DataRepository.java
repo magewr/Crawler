@@ -2,12 +2,14 @@ package com.example.wr.crawler.data;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.util.Log;
 
 import com.example.wr.crawler.data.local.LocalRepository;
 import com.example.wr.crawler.data.remote.RemoteRepository;
 import com.example.wr.crawler.data.remote.dto.ImageDTO;
 import com.example.wr.crawler.ui.listener.SimpleSingleObserver;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -63,7 +65,29 @@ public class DataRepository {
         return completable;
     }
 
-    public Single<Bitmap> getImageByName(String imageName) {
-        return remoteRepository.downloadImageFromURL(imageName);
+    public Single<Bitmap> getImageByName(String imageUrl) {
+        String imageName = imageUrl.substring(imageUrl.lastIndexOf("/") + 1, imageUrl.lastIndexOf("."));
+        Single<Bitmap> single = Single.create(emitter -> {
+            try {
+                Bitmap cachedBitmap = localRepository.getBitmapFromCache(imageName);
+                if (cachedBitmap != null) {
+                    emitter.onSuccess(cachedBitmap);
+                    return;
+                }
+                Bitmap downloadBitmap = remoteRepository.downloadImageFromURL(imageUrl);
+                if (downloadBitmap != null) {
+                    localRepository.addBitmapToCache(imageName, downloadBitmap);
+                    emitter.onSuccess(downloadBitmap);
+                } else if (emitter.isDisposed() == false)
+                    emitter.onError(new IOException("Bitmap is null"));
+            }
+            catch (Exception e) {
+                Log.d("ImageCache", "Error : " + e.getMessage());
+                localRepository.removeBitmapFromCache(imageName);
+                if (emitter.isDisposed() == false)
+                    emitter.onError(e);
+            }
+        });
+        return single;
     }
 }
