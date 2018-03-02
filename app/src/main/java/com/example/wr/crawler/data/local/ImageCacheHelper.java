@@ -13,8 +13,8 @@ import com.example.wr.crawler.ui.listener.SimpleCompletableObserver;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.LinkedList;
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -31,14 +31,13 @@ import lombok.Getter;
 @Singleton
 public class ImageCacheHelper {
     private final Context context = App.getContext();
-    private final ConcurrentHashMap<String, String> cacheMap = new ConcurrentHashMap<>();
-    private final LinkedList<String> queue = new LinkedList<>();
+    private final LinkedHashMap<String, String> cacheMap = new LinkedHashMap<>();
     private final Object diskCacheLock = new Object();
     @Getter  private boolean diskCacheReady = false;
     private volatile long cacheSize = 0;
 
     private static final String DISK_CACHE_SUB_DIR = "thumbnails";
-    private final long DISK_CACHE_SIZE = 1024 * 1024 * 1; //5MB
+    private final long DISK_CACHE_SIZE = 1024 * 1024 * 5; //5MB
 
 
     @Inject
@@ -51,7 +50,6 @@ public class ImageCacheHelper {
                 File[] cachedFiles = cacheDir.listFiles();
                 for (int i = 0; i < cachedFiles.length; i++) {
                     File item = cachedFiles[i];
-                    queue.add(item.getName());
                     cacheMap.put(item.getName(), item.getAbsolutePath());
                     cacheSize += item.length();
                 }
@@ -73,14 +71,14 @@ public class ImageCacheHelper {
 
     private void removeFirstCachedFile() {
         synchronized (diskCacheLock) {
-            File target = new File(cacheMap.get(queue.getFirst()));
+            Map.Entry<String, String> firstItem = cacheMap.entrySet().iterator().next();
+            File target = new File(firstItem.getValue());
             long fileSize = target.length();
             if (target.exists())
                 target.delete();
 
             cacheSize -= fileSize;
-            cacheMap.remove(queue.getFirst());
-            queue.removeFirst();
+            cacheMap.remove(firstItem.getKey());
             Log.d("ImageCacheHelper", "Remove Success, currentCacheSize=" + cacheSize);
         }
     }
@@ -92,7 +90,6 @@ public class ImageCacheHelper {
             removeFirstCachedFile();
 
         synchronized (diskCacheLock) {
-            queue.addLast(key);
             cacheMap.put(key, imageFile.getAbsolutePath());
             cacheSize += imageFile.length();
             Log.d("ImageCacheHelper", "add Success, currentCacheSize=" + cacheSize);
