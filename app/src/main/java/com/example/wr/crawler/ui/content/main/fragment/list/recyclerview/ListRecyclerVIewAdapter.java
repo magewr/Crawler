@@ -18,8 +18,6 @@ import javax.inject.Inject;
 
 import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.CompositeDisposable;
-import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
 /**
@@ -58,16 +56,17 @@ public class ListRecyclerVIewAdapter extends RecyclerView.Adapter<ListRecyclerVi
 
             @Override
             public void onError(Throwable e) {
-                super.onError(e);
+                holder.imageView.setImageResource(R.drawable.refresh);
             }
         }));
 
     }
 
     @Override
-    public void onViewDetachedFromWindow(ListRecyclerViewHolder holder) {
-        if(holder.getDisposable().isDisposed() == false)
+    public void onViewRecycled(ListRecyclerViewHolder holder) {
+        if(holder.getDisposable().isDisposed() == false) {
             holder.getDisposable().dispose();
+        }
     }
 
     @Override

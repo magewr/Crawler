@@ -1,18 +1,14 @@
 package com.example.wr.crawler.data;
 
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.util.Log;
 
 import com.example.wr.crawler.data.local.LocalRepository;
 import com.example.wr.crawler.data.remote.RemoteRepository;
 import com.example.wr.crawler.data.remote.dto.ImageDTO;
 import com.example.wr.crawler.ui.listener.SimpleSingleObserver;
 
+import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.ArrayList;
 
 import javax.inject.Inject;
@@ -74,16 +70,15 @@ public class DataRepository {
                     emitter.onSuccess(cachedBitmap);
                     return;
                 }
-                Bitmap downloadBitmap = remoteRepository.downloadImageFromURL(imageUrl);
-                if (downloadBitmap != null) {
-                    localRepository.addBitmapToCache(imageName, downloadBitmap);
-                    emitter.onSuccess(downloadBitmap);
+                File localFile = remoteRepository.downloadImageFromURL(imageUrl, localRepository.getCacheDirWithFileName(imageName));
+                if (localFile != null) {
+                    localRepository.addBitmapFileToCache(imageName, localFile);
+                    Bitmap bitmap = localRepository.getBitmapFromCache(imageName);
+                    emitter.onSuccess(bitmap);
                 } else if (emitter.isDisposed() == false)
                     emitter.onError(new IOException("Bitmap is null"));
             }
             catch (Exception e) {
-                Log.d("ImageCache", "Error : " + e.getMessage());
-                localRepository.removeBitmapFromCache(imageName);
                 if (emitter.isDisposed() == false)
                     emitter.onError(e);
             }

@@ -2,6 +2,9 @@ package com.example.wr.crawler.data.local;
 
 import android.graphics.Bitmap;
 
+import java.io.File;
+import java.io.IOException;
+
 import javax.inject.Inject;
 
 /**
@@ -17,15 +20,19 @@ public class LocalRepository {
         this.imageCacheHelper = imageCacheHelper;
     }
 
-    public void addBitmapToCache(String key, Bitmap bitmap) {
-        imageCacheHelper.addBitmapToCache(key, bitmap);
+    public void addBitmapFileToCache(String key, File bitmapFile) {
+        imageCacheHelper.addBitmapToCache(key, bitmapFile);
     }
 
     public Bitmap getBitmapFromCache(String key) {
         return imageCacheHelper.getBitmapFromDiskCache(key);
     }
 
-    public void removeBitmapFromCache(String key) {
-        imageCacheHelper.removeBitmapFromCache(key);
+    public String getCacheDirWithFileName(String fileName) throws IOException{
+        return imageCacheHelper.getDiskCacheFileName(fileName);
     }
+
+//    public void removeBitmapFromCache(String key) {
+//        imageCacheHelper.removeBitmapFromCache(key);
+//    }
 }
