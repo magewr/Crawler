@@ -10,6 +10,7 @@ public interface SplashContract{
     interface View extends BaseView {
         void moveToMainActivity();
         void loadSplashImage();
+        void showErrorDialog();
     }
 
     interface Presenter {

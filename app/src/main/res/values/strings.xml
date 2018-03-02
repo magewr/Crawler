@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">image_crawler</string>
+    <string name="splash_connect_err">서버에 접속할 수 없습니다. 인터넷 연결상태를 확인해주세요.</string>
 </resources>

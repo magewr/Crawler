@@ -1,5 +1,7 @@
 package com.example.wr.crawler.ui.content.main;
 
+import android.content.Context;
+import android.content.Intent;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.widget.TextView;
@@ -19,6 +21,13 @@ import butterknife.BindView;
  */
 
 public class MainActivity extends BaseActivity implements MainContract.View {
+
+    public static Intent getCallingIntent(Context context) {
+        Intent intent = new Intent(context, MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        return intent;
+    }
 
     @Inject
     MainPresenter presenter;

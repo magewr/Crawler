@@ -94,7 +94,7 @@ public class RemoteRepository {
 
             File file = new File(localPath);
             if (currentTotal != totalFileLength) {
-                Log.d("RemoteRepository", "Download not complete. Remove Image FIle");
+                Log.d("RemoteRepository", "Download Intruppted");
                 file.delete();
                 return null;
             }

@@ -3,6 +3,7 @@ package com.example.wr.crawler.ui.content.splash;
 import com.example.wr.crawler.data.DataRepository;
 import com.example.wr.crawler.ui.base.Presenter;
 import com.example.wr.crawler.ui.listener.SimpleCompletableObserver;
+import com.example.wr.crawler.ui.utils.AlertDialogHelper;
 
 import javax.inject.Inject;
 
@@ -36,7 +37,7 @@ public class SplashPresenter extends Presenter<SplashContract.View> implements S
 
             @Override
             public void onError(Throwable e) {
-                super.onError(e);
+                getView().showErrorDialog();
             }
         });
     }

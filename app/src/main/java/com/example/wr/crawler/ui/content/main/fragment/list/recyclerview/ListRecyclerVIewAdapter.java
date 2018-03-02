@@ -56,7 +56,7 @@ public class ListRecyclerVIewAdapter extends RecyclerView.Adapter<ListRecyclerVi
 
             @Override
             public void onError(Throwable e) {
-                holder.imageView.setImageResource(R.drawable.refresh);
+                holder.imageView.setImageResource(R.drawable.broken);
             }
         }));
 
