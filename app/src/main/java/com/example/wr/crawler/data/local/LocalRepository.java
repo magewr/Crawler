@@ -13,26 +13,23 @@ import javax.inject.Inject;
 
 public class LocalRepository {
 
-    ImageCacheHelper imageCacheHelper;
+    ImageCache imageCache;
 
     @Inject
-    LocalRepository(ImageCacheHelper imageCacheHelper){
-        this.imageCacheHelper = imageCacheHelper;
+    LocalRepository(ImageCache imageCache){
+        this.imageCache = imageCache;
     }
 
     public void addBitmapFileToCache(String key, File bitmapFile) {
-        imageCacheHelper.addBitmapToCache(key, bitmapFile);
+        imageCache.addBitmapToCache(key, bitmapFile);
     }
 
     public Bitmap getBitmapFromCache(String key) {
-        return imageCacheHelper.getBitmapFromDiskCache(key);
+        return imageCache.getBitmapFromDiskCache(key);
     }
 
     public String getCacheDirWithFileName(String fileName) throws IOException{
-        return imageCacheHelper.getDiskCacheFileName(fileName);
+        return imageCache.getDiskCacheFileName(fileName);
     }
 
-//    public void removeBitmapFromCache(String key) {
-//        imageCacheHelper.removeBitmapFromCache(key);
-//    }
 }

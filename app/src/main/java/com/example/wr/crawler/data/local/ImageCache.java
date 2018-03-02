@@ -29,7 +29,7 @@ import lombok.Getter;
  */
 
 @Singleton
-public class ImageCacheHelper {
+public class ImageCache {
     private final Context context = App.getContext();
     private final LinkedHashMap<String, String> cacheMap = new LinkedHashMap<>();
     private final Object diskCacheLock = new Object();
@@ -41,7 +41,7 @@ public class ImageCacheHelper {
 
 
     @Inject
-    ImageCacheHelper() {
+    ImageCache() {
         Completable init = Completable.create(emitter -> {
             synchronized (diskCacheLock) {
                 File cacheDir = getDiskCacheDir();
@@ -53,7 +53,7 @@ public class ImageCacheHelper {
                     cacheMap.put(item.getName(), item.getAbsolutePath());
                     cacheSize += item.length();
                 }
-                Log.d("ImageCacheHelper", "ImageCache Ready, count :" + cachedFiles.length);
+                Log.d("ImageCache", "ImageCache Ready, count :" + cachedFiles.length);
                 diskCacheReady = true;
                 diskCacheLock.notifyAll();
                 emitter.onComplete();
@@ -79,7 +79,7 @@ public class ImageCacheHelper {
 
             cacheSize -= fileSize;
             cacheMap.remove(firstItem.getKey());
-            Log.d("ImageCacheHelper", "Remove Success, currentCacheSize=" + cacheSize);
+            Log.d("ImageCache", "Remove Success, currentCacheSize=" + cacheSize);
         }
     }
 
@@ -92,12 +92,12 @@ public class ImageCacheHelper {
         synchronized (diskCacheLock) {
             cacheMap.put(key, imageFile.getAbsolutePath());
             cacheSize += imageFile.length();
-            Log.d("ImageCacheHelper", "add Success, currentCacheSize=" + cacheSize);
+            Log.d("ImageCache", "add Success, currentCacheSize=" + cacheSize);
         }
     }
 
     public Bitmap getBitmapFromDiskCache(String key) {
-        Log.d("ImageCacheHelper", "Cache HIT!, KEY=" + key);
+        Log.d("ImageCache", "Cache HIT!, KEY=" + key);
         if (cacheMap.containsKey(key)) {
             Bitmap bitmap = BitmapFactory.decodeFile(cacheMap.get(key));
             return bitmap;
