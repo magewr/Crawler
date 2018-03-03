@@ -22,7 +22,6 @@ import javax.inject.Singleton;
 import io.reactivex.Completable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
-import lombok.Getter;
 
 /**
  * Created by loadm on 2018-03-01.
@@ -33,7 +32,7 @@ public class ImageCache {
     private final Context context = App.getContext();
     private final LinkedHashMap<String, String> cacheMap = new LinkedHashMap<>();
     private final Object diskCacheLock = new Object();
-    @Getter  private boolean diskCacheReady = false;
+    private boolean diskCacheReady = false;
     private volatile long cacheSize = 0;
 
     private static final String DISK_CACHE_SUB_DIR = "thumbnails";
@@ -134,6 +133,10 @@ public class ImageCache {
         final String cacheDir = "/Android/data/" + context.getPackageName() + "/cache/";
 
         return new File(Environment.getExternalStorageDirectory().getPath() + cacheDir);
+    }
+
+    public boolean isDiskCacheReady() {
+        return diskCacheReady;
     }
 }
 

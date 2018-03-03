@@ -8,8 +8,6 @@ import com.example.wr.crawler.di.component.DaggerApplicationComponent;
 import com.example.wr.crawler.di.module.ApiModule;
 import com.example.wr.crawler.di.module.ApplicationModule;
 
-import lombok.Getter;
-
 /**
  * Created by WR on 2017-11-27.
  */
@@ -17,7 +15,7 @@ import lombok.Getter;
 public class App extends Application {
 
     private ApplicationComponent applicationComponent;
-    @Getter private static Context context;
+    private static Context context;
 
     @Override
     public void onCreate() {
@@ -40,5 +38,9 @@ public class App extends Application {
 
     public ApplicationComponent getApplicationComponent() {
         return applicationComponent;
+    }
+
+    public static Context getContext() {
+        return context;
     }
 }

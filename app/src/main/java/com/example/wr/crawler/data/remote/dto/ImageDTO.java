@@ -1,20 +1,33 @@
 package com.example.wr.crawler.data.remote.dto;
 
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
 /**
  * Created by WR on 2017-11-27.
  */
 
-@NoArgsConstructor
-@AllArgsConstructor
-@Getter
-@Setter
 public class ImageDTO {
-    String imgSrc;
-    String caption;
+
+    private String imgSrc;
+    private String caption;
+
+    public ImageDTO(String imgSrc, String caption) {
+        this.imgSrc = imgSrc;
+        this.caption = caption;
+    }
+
+    public String getImgSrc() {
+        return imgSrc;
+    }
+
+    public void setImgSrc(String imgSrc) {
+        this.imgSrc = imgSrc;
+    }
+
+    public String getCaption() {
+        return caption;
+    }
+
+    public void setCaption(String caption) {
+        this.caption = caption;
+    }
 }

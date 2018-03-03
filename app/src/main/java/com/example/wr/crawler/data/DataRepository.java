@@ -18,7 +18,6 @@ import io.reactivex.Completable;
 import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
-import lombok.Getter;
 
 /**
  * Created by WR on 2017-11-29.
@@ -30,7 +29,6 @@ public class DataRepository {
     private LocalRepository localRepository;
     private RemoteRepository remoteRepository;
 
-    @Getter
     private ArrayList<ImageDTO> imageDtoList;
 
     @Inject
@@ -84,5 +82,9 @@ public class DataRepository {
             }
         });
         return single;
+    }
+
+    public ArrayList<ImageDTO> getImageDtoList() {
+        return imageDtoList;
     }
 }

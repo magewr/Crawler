@@ -1,12 +1,7 @@
 package com.example.wr.crawler.data.remote;
 
-import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.os.Environment;
 import android.util.Log;
 
-import com.example.wr.crawler.App;
 import com.example.wr.crawler.data.remote.dto.ImageDTO;
 import com.example.wr.crawler.data.remote.service.BaseUrl;
 
@@ -16,22 +11,17 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.io.BufferedInputStream;
-import java.io.DataInputStream;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InterruptedIOException;
 import java.io.OutputStream;
-import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
 
 import javax.inject.Inject;
 
-import io.reactivex.Observable;
 import io.reactivex.Single;
 
 /**
@@ -94,7 +84,7 @@ public class RemoteRepository {
 
             File file = new File(localPath);
             if (currentTotal != totalFileLength) {
-                Log.d("RemoteRepository", "Download Intruppted");
+                Log.d("RemoteRepository", "Download Interrupted");
                 file.delete();
                 return null;
             }
