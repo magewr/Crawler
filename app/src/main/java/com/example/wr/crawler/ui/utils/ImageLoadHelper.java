@@ -2,6 +2,7 @@ package com.example.wr.crawler.ui.utils;
 
 import android.content.res.Resources;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.util.DisplayMetrics;
 
@@ -29,7 +30,7 @@ public class ImageLoadHelper {
 
     public Single<Bitmap> getBitmapByImageName(String imageName, ThumbnailSize thumbnailSize) {
         Single<Bitmap> single = dataRepository.getImageByName(imageName)
-                .map(bitmap -> compressBitmap(bitmap, thumbnailSize));
+                .map(file -> compressBitmap(BitmapFactory.decodeFile(file.getPath()), thumbnailSize));
 
         return single;
     }

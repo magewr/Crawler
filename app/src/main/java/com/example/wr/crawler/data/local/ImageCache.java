@@ -1,8 +1,6 @@
 package com.example.wr.crawler.data.local;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.os.Environment;
 import android.util.Log;
@@ -95,14 +93,16 @@ public class ImageCache {
         }
     }
 
-    public Bitmap getBitmapFromDiskCache(String key) {
+    public File getBitmapFileFromDiskCache(String key) {
         Log.d("ImageCache", "Cache HIT!, KEY=" + key);
-        if (cacheMap.containsKey(key)) {
-            Bitmap bitmap = BitmapFactory.decodeFile(cacheMap.get(key));
-            return bitmap;
-        }
+        if (cacheMap.containsKey(key))
+            return new File(cacheMap.get(key));
         else
             return null;
+    }
+
+    public boolean hasCache(String key) {
+        return cacheMap.containsKey(key);
     }
 
     public String getDiskCacheFileName(String fileName) throws IOException{
@@ -113,7 +113,6 @@ public class ImageCache {
     }
 
     public File getDiskCacheDir() {
-        Context context = App.getContext();
         final String cachePath = Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState()) || !isExternalStorageRemovable() ? getExternalCacheDir(context).getPath() : context.getCacheDir()
                 .getPath();
         return new File(cachePath + File.separator + DISK_CACHE_SUB_DIR);

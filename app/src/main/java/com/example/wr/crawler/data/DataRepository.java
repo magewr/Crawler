@@ -1,7 +1,5 @@
 package com.example.wr.crawler.data;
 
-import android.graphics.Bitmap;
-
 import com.example.wr.crawler.data.local.LocalRepository;
 import com.example.wr.crawler.data.remote.RemoteRepository;
 import com.example.wr.crawler.data.remote.dto.ImageDTO;
@@ -59,20 +57,20 @@ public class DataRepository {
         return completable;
     }
 
-    public Single<Bitmap> getImageByName(String imageUrl) {
+    public Single<File> getImageByName(String imageUrl) {
         String imageName = imageUrl.substring(imageUrl.lastIndexOf("/") + 1, imageUrl.lastIndexOf("."));
-        Single<Bitmap> single = Single.create(emitter -> {
+        Single<File> single = Single.create(emitter -> {
             try {
-                Bitmap cachedBitmap = localRepository.getBitmapFromCache(imageName);
-                if (cachedBitmap != null) {
-                    emitter.onSuccess(cachedBitmap);
+                File bitmapFile = localRepository.getBitmapFileFromCache(imageName);
+                if (bitmapFile != null) {
+                    emitter.onSuccess(bitmapFile);
                     return;
                 }
                 File localFile = remoteRepository.downloadImageFromURL(imageUrl, localRepository.getCacheDirWithFileName(imageName));
                 if (localFile != null) {
                     localRepository.addBitmapFileToCache(imageName, localFile);
-                    Bitmap bitmap = localRepository.getBitmapFromCache(imageName);
-                    emitter.onSuccess(bitmap);
+                    bitmapFile = localRepository.getBitmapFileFromCache(imageName);
+                    emitter.onSuccess(bitmapFile);
                 } else if (emitter.isDisposed() == false)
                     emitter.onError(new IOException("Bitmap is null"));
             }

@@ -24,8 +24,8 @@ public class LocalRepository {
         imageCache.addBitmapToCache(key, bitmapFile);
     }
 
-    public Bitmap getBitmapFromCache(String key) {
-        return imageCache.getBitmapFromDiskCache(key);
+    public File getBitmapFileFromCache(String key) {
+        return imageCache.getBitmapFileFromDiskCache(key);
     }
 
     public String getCacheDirWithFileName(String fileName) throws IOException{
