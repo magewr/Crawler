@@ -1,6 +1,7 @@
 package com.example.wr.crawler.ui.content.main.fragment.list.recyclerview;
 
 import android.graphics.Bitmap;
+import android.graphics.drawable.AnimationDrawable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -43,7 +44,9 @@ public class ListRecyclerVIewAdapter extends RecyclerView.Adapter<ListRecyclerVi
     @Override
     public void onBindViewHolder(ListRecyclerViewHolder holder, int position) {
         holder.textView.setText(imageList.get(position).getCaption());
-        holder.imageView.setImageBitmap(null);
+        holder.imageView.setImageResource(R.drawable.loading_drawable);
+        AnimationDrawable animation = (AnimationDrawable)holder.imageView.getDrawable();
+        animation.start();
         Single<Bitmap> single = imageLoadHelper.getBitmapByImageName(imageList.get(position).getImgSrc(), getThumbnailSize())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
