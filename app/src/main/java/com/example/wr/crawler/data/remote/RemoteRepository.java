@@ -16,6 +16,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
@@ -56,16 +57,19 @@ public class RemoteRepository {
     }
 
     public File downloadImageFromURL(String src, String localPath) throws IOException {
+        HttpURLConnection connection = null;
+        InputStream input = null;
+        OutputStream output = null;
         try {
             URL url = new URL(src);
-            URLConnection connection = url.openConnection();
+            connection = (HttpURLConnection)url.openConnection();
             connection.connect();
 
             long totalFileLength = connection.getContentLength();
 
-            InputStream input = new BufferedInputStream(url.openStream());
+            input = new BufferedInputStream(url.openStream());
 
-            OutputStream output = new FileOutputStream(localPath);
+            output = new FileOutputStream(localPath);
 
             byte data[] = new byte[1024];
 
@@ -78,10 +82,6 @@ public class RemoteRepository {
 
             output.flush();
 
-            // closing streams
-            output.close();
-            input.close();
-
             File file = new File(localPath);
             if (currentTotal != totalFileLength) {
                 Log.d("RemoteRepository", "Download Interrupted");
@@ -92,6 +92,13 @@ public class RemoteRepository {
 
         } catch (IOException e) {
             return null;
+        } finally {
+            if (output != null)
+                output.close();
+            if (input != null)
+                input.close();
+            if (connection != null)
+                connection.disconnect();
         }
     }
 

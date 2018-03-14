@@ -52,7 +52,6 @@ public class ImageCache {
                 }
                 Log.d("ImageCache", "ImageCache Ready, count :" + cachedFiles.length);
                 diskCacheReady = true;
-                diskCacheLock.notifyAll();
                 emitter.onComplete();
             }
         });
@@ -76,8 +75,8 @@ public class ImageCache {
 
             cacheSize -= fileSize;
             cacheMap.remove(firstItem.getKey());
-            Log.d("ImageCache", "Remove Success, currentCacheSize=" + cacheSize);
         }
+        Log.d("ImageCache", "Remove Success, currentCacheSize=" + cacheSize);
     }
 
     //이미지 캐시에 저장
@@ -89,16 +88,18 @@ public class ImageCache {
         synchronized (diskCacheLock) {
             cacheMap.put(key, imageFile.getAbsolutePath());
             cacheSize += imageFile.length();
-            Log.d("ImageCache", "add Success, currentCacheSize=" + cacheSize);
         }
+        Log.d("ImageCache", "add Success, currentCacheSize=" + cacheSize);
     }
 
     public File getBitmapFileFromDiskCache(String key) {
         Log.d("ImageCache", "Cache HIT!, KEY=" + key);
-        if (cacheMap.containsKey(key))
-            return new File(cacheMap.get(key));
-        else
-            return null;
+        synchronized (diskCacheLock) {
+            if (cacheMap.containsKey(key))
+                return new File(cacheMap.get(key));
+            else
+                return null;
+        }
     }
 
     public boolean hasCache(String key) {
